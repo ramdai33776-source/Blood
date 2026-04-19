@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OPC Blood Test Suggestion</title>
+<style>
+body {
+  font-family: Arial;
+  background: linear-gradient(to right, #ff6a00, #ee0979);
+  color: white;
+  text-align: center;
+}
+.container {
+  background: white;
+  color: black;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  margin: auto;
+  margin-top: 20px;
+}
+input, button {
+  width: 90%;
+  padding: 10px;
+  margin: 5px;
+}
+button {
+  background: #ee0979;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.contact {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: yellow;
+}
+.payment-box {
+  margin-top: 15px;
+  padding: 10px;
+  background: #fff3cd;
+  color: black;
+  border-radius: 8px;
+}
+.qr {
+  margin-top: 10px;
+}
+.qr img {
+  width: 150px;
+}
+.fee {
+  background: #28a745;
+  color: white;
+  padding: 8px;
+  border-radius: 6px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+</style>
+</head>
+<body>
+
+<h1>🧪 OPS Blood Test Suggestion</h1>
+<p>Enter 10 problems and get suggested blood tests</p>
+
+<div class="container">
+  <div class="fee">💰 Service Fee: ₹50 Only</div>
+  
+  <div id="inputs"></div>
+  <button onclick="suggestTest()">Get Test Suggestion</button>
+  
+  <div class="payment-box" id="paymentSection" style="display:none;">
+    💰 Result dekhne ke liye ₹50 payment kare<br><br>
+    👉 UPI ID: <b>8077696518@ptsbi</b><br><br>
+    📲 Ya QR code scan kare:
+    <div class="qr">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=8077696518@ptsbi&pn=BloodTest&am=50" alt="QR Code">
+    </div>
+    👉 Payment ke baad niche button dabaye
+    <br><br>
+    <button onclick="showResult()">I Have Paid</button>
+  </div>
+
+  <h3 id="result"></h3>
+</div>
+
+<div class="contact">
+  📞 Blood collection ke liye sampark kare: 8077696518 <br>
+  📍 Address: Rampur, UP - 244901
+</div>
+
+<script>
+let finalResult = "";
+
+// Create 10 input fields
+let inputDiv = document.getElementById("inputs");
+for (let i = 1; i <= 10; i++) {
+  inputDiv.innerHTML += `<input type="text" id="prob${i}" placeholder="Problem ${i}"><br>`;
+}
+
+function suggestTest() {
+  let problems = [];
+  for (let i = 1; i <= 10; i++) {
+    let val = document.getElementById("prob" + i).value.toLowerCase();
+    if (val) problems.push(val);
+  }
+
+  if (problems.includes("fever") || problems.includes("weakness")) {
+    finalResult = "CBC Test, Malaria Test";
+  }
+  else if (problems.includes("thyroid") || problems.includes("weight gain")) {
+    finalResult = "Thyroid Profile Test";
+  }
+  else if (problems.includes("sugar") || problems.includes("frequent urination")) {
+    finalResult = "Blood Sugar Test";
+  }
+  else if (problems.includes("fatigue") || problems.includes("low energy")) {
+    finalResult = "Vitamin D & B12 Test";
+  }
+  else {
+    finalResult = "General Health Checkup (CBC, LFT, KFT)";
+  }
+
+  document.getElementById("paymentSection").style.display = "block";
+  document.getElementById("result").innerText = "";
+}
+
+function showResult() {
+  document.getElementById("result").innerText = "Suggested Test: " + finalResult;
+}
+</script>
+
+</body>
+</html>
